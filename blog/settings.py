@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
+
     'django.contrib.staticfiles',
 
     'django.contrib.sites',
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'posts',
     'crispy_forms',
+    'cloudinary',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -130,18 +133,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+MEDIA_URL = '/media/'
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -160,3 +164,10 @@ LOGIN_REDIRECT_URL="/"
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'YOUR_CLOUD_NAME',
+    'API_KEY': 'YOUR_API_KEY',
+    'API_SECRET': 'YOUR_API_SECRET',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
